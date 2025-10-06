@@ -1,10 +1,15 @@
 package com.bptn;
 
-
+import com.bptn.inventory_app.model.*; // Import all product models
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class App {
     private static Scanner scanner = new Scanner(System.in);
+    
+    // Use a simple array for the inventory. We'll set a fixed size for now.
+    private static Product[] inventory = new Product[10];
+    private static int productCount = 0;
 
     private static void printMenu() {
         System.out.println("\n--- Smart Inventory Assistant Menu ---");
@@ -22,13 +27,12 @@ public class App {
 
         System.out.println("Welcome to Smart Inventory Assistant!");
 
-        initializeData(); // Add some sample data (will be an empty stub for now)
+        initializeData(); // Add some sample data
 
         boolean running = true;
         while (running) {
             printMenu();
 
-            
             int choice = scanner.nextInt();
 
                 switch (choice) {
@@ -48,18 +52,24 @@ public class App {
 
             } 
         }
+        scanner.close(); // Close the scanner when the application exits.
 
     }
 
-    // Method Stubs - Implementations will follow in later exercises
     private static void addProduct(){
-        // Implementation for adding a new product will go here
+        // This method will be implemented later, as it requires user input utilities.
         System.out.println("\n--- Add New Product (Not yet implemented) ---");
     }
 
     private static void viewAllProducts() {
-        // Implementation for viewing all products will go here
-        System.out.println("\n--- View All Products (Not yet implemented) ---");
+        System.out.println("\n--- All Products in Inventory ---");
+        if (productCount == 0) {
+            System.out.println("No products in inventory.");
+            return;
+        }
+        for (int i = 0; i < productCount; i++) {
+            System.out.println(inventory[i]);
+        }
     }
 
     private static void viewAllProductSummaries() {
@@ -93,9 +103,18 @@ public class App {
     }
 
     private static void initializeData() {
-        // Implementation for initializing sample data will go here
         System.out.println("\n=========================================");
-        System.out.println("🚀 Initializing Sample Inventory Data (Not yet implemented)...");
+        System.out.println("🚀 Initializing Sample Inventory Data...");
+        System.out.println("=========================================");
+        
+        // Create and add products directly to the array
+        inventory[productCount++] = new Product("PROD-1000", "Laptop X200", ProductCategory.ELECTRONICS, 800, 1200, 10, "TechSupplier Inc.");
+        inventory[productCount++] = new PerishableProduct("PROD-1001", "Organic Apples", ProductCategory.GROCERIES, 1, 2.5, 50, "FarmFresh Co.", LocalDate.now().plusDays(14));
+        inventory[productCount++] = new Product("PROD-1002", "Java Programming Book", ProductCategory.BOOKS, 20, 45, 25, "EduPublishers");
+        inventory[productCount++] = new ElectronicsProduct("PROD-1003", "Smart Watch Z", ProductCategory.ELECTRONICS, 150, 250, 15, "GadgetGlobal", "SN-SWZ-001", 12);
+        
+        System.out.println("=========================================");
+        System.out.println("✅ Sample Data Initialization Complete!");
         System.out.println("=========================================\n");
     }
 }
